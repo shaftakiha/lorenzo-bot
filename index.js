@@ -22,4 +22,15 @@ client.on('messageCreate', async (message) => {
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-
+  model: 'gpt-3.5-turbo',
+  messages: [
+    {
+      role: 'system',
+      content: 'Kamu LorenzoBot, bot yang ramah, lucu, suka bercanda, dan bisa ngobrol kayak manusia.'
+    },
+    {
+      role: 'user',
+      content: message.content
+    }
+  ]
+});
