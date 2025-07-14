@@ -22,15 +22,25 @@ client.on('messageCreate', async (message) => {
 
   try {
     const response = await openai.chat.completions.create({
-  model: 'gpt-3.5-turbo',
-  messages: [
-    {
-      role: 'system',
-      content: 'Kamu LorenzoBot, bot yang ramah, lucu, suka bercanda, dan bisa ngobrol kayak manusia.'
-    },
-    {
-      role: 'user',
-      content: message.content
-    }
-  ]
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: 'Kamu adalah LorenzoBot, bot AI yang ramah, lucu, dan bisa ngobrol seperti manusia.'
+        },
+        {
+          role: 'user',
+          content: message.content
+        }
+      ]
+    });
+
+    const reply = response.choices[0].message.content;
+    message.channel.send(reply);
+  } catch (error) {
+    console.error(error);
+    message.channel.send('Maaf, aku error 😅');
+  }
 });
+
+client.login(process.env.TOKEN);
