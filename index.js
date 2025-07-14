@@ -13,9 +13,33 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-  if (message.content === '!halo') {
-    message.channel.send(`Halo ${message.author.username}, aku LorenzoBot!`);
+  if (message.author.bot) return; // Biar gak bales diri sendiri
+
+  switch (message.content.toLowerCase()) {
+    case '!halo':
+      message.channel.send(`Halo ${message.author.username}, aku LorenzoBot!`);
+      break;
+
+    case 'ping':
+      message.channel.send('Pong!');
+      break;
+
+    case 'apa kabar?':
+      message.channel.send('Aku baik, kamu gimana? 😊');
+      break;
+
+    case 'siapa kamu?':
+      message.channel.send('Aku LorenzoBot, bot setia buatanmu! 🤖');
+      break;
+
+    case 'apa tugasmu?':
+      message.channel.send('Tugas saya adalah membantu kamu, bang Namoy!');
+      break;
+
+    default:
+      // Bisa juga kasih fallback:
+      // message.channel.send("Maaf, aku belum ngerti itu 😅");
+      break;
   }
 });
-
 client.login(process.env.TOKEN);
