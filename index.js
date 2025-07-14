@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
+const { OpenAI } = require('openai');
 
 const client = new Client({
   intents: [
@@ -8,29 +9,17 @@ const client = new Client({
   ]
 });
 
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
 client.once('ready', () => {
   console.log(`✅ Bot aktif sebagai ${client.user.tag}`);
 });
 
-client.on('messageCreate', (message) => {
-  if (message.author.bot) return;      // abaikan pesan bot lain
+client.on('messageCreate', async (message) => {
+  if (message.author.bot) return;
 
-  // daftar balasan acak
-  const responses = [
-    "Hmmm… maksud kamu gimana tuh? 🤔",
-    "Wah mantap juga tuh!",
-    "Aku LorenzoBot, aku dengerin kamu kok 👂",
-    "Haha iya iya 😄",
-    "Ceritain dong lebih lanjut!",
-    "Itu kayaknya penting ya?",
-    "Gak ngerti tapi aku tetap support kamu 💪",
-    "Oke noted 📝",
-    "Wah aku juga pernah ngerasa gitu!",
-    "Keren sih kamu 👏"
-  ];
-
-  const reply = responses[Math.floor(Math.random() * responses.length)];
-  message.channel.send(reply);
-});
-
-client.login(process.env.TOKEN);
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-
